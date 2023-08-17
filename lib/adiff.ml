@@ -37,8 +37,15 @@ end = struct
 
   (* Floating *)
 
-
-
-
+  let pi = D (F.pi, F.zero)
+  let exp (D (x1, x2)) = D (F.exp x1, x2 * F.exp x1)
+  let log (D (x1, x2)) = D (F.log x1, x2 / x1)
+  let sin (D (x1, x2)) = D (F.sin x1, x2 * F.cos x1)
+  let cos (D (x1, x2)) = D (F.cos x1, F.(~-) (x2 * F.sin x1))
+  let asin (D (x1, x2)) = D (F.asin x1, x2 / F.sqrt (F.one - x1 * x1))
+  let acos (D (x1, x2)) = D (F.acos x1, F.(~-) (x2 / F.sqrt (F.one - x1 * x1)))
+  let atan (D (x1, x2)) = D (F.atan x1, x2 / (F.one + x1 * x1))
+  let sinh (D (x1, x2)) = D (F.sinh x1, x2 * F.cosh x1)
+  let cosh (D (x1, x2)) = D (F.cosh x1, x2 * F.sinh x1)
 
 end 
