@@ -1,0 +1,5 @@
+(library
+ (public_name adiff)
+ (modules Adiff)
+ (libraries imp)
+ (synopsis "Beautifull Differentiation"))
