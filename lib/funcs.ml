@@ -4,7 +4,6 @@ open Imp.Data.Fractional;;
 open Imp.Data.Floating;;
 open Imp.Data;;
 open Imp.Any;;
-open Basic;;
 
 
 
