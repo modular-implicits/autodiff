@@ -1,5 +1,5 @@
 (library
  (public_name adiff)
- (modules Basic Funcs)
+ (modules Basic Funcs Vecspace)
  (libraries imp)
  (synopsis "Beautifull Differentiation"))
