@@ -14,6 +14,8 @@ let idD x = D (x,1.);;
 
 exception Not_Implemented of string
 
+let (><) {N : Num} (f : N.t -> N.t) (f' : N.t -> N.t) : (N.t d -> N.t d) = fun (D (a, a')) ->  D (f a, N.(f' a * a'))
+
 implicit module Diff {F : Floating} : sig 
   include Eq with type t = F.t d
   include Num with type t := t
@@ -42,29 +44,20 @@ end = struct
 
   let of_fractional (x : float) : t = D (F.of_fractional x, F.zero)
 
-  let recip (D (x, x')) : t = D (F.(one /. x), F.(x' / (x * x)))
-
+  let recip : t -> t = (fun x -> F.(one /. x)) >< fun x -> F.(~- one / (x * x))
   let (/.) x y : t = x * (recip y)
 
   (* Floating *)
 
   let pi = D (F.pi, F.zero)
-  let sqrt (D (x, x')) : t = D (F.sqrt x,  F.(x' /. ((of_int 2) * sqrt x)))
-  let exp (D (x, x')) : t = D (F.exp x, F.(x' * (exp x)))
-  let log (D (x, x')) : t = D (F.log x, F.(x' /. x))
-  let sin (D (x, x')) : t = D (F.sin x, F.(x' * (cos x)))
-  let cos (D (x, x')) : t = D (F.cos x, F.(~-) (F.(x' * (sin x))))
-  let asin (D (x, x')) : t = D (F.asin x, F.(x' /. (sqrt (F.one - (x * x)))))
-  let acos (D (x, x')) : t = D (F.acos x, F.(~-) F.(x'  /. (sqrt (one - (x * x)))))
-  let atan (D (x, x')) : t = D (F.atan x, F.(x' /. (one + (x * x))))
-  let sinh (D (x, x')) : t = D (F.sinh x, F.(x' * (cosh x)))
-  let cosh (D (x, x')) : t = D (F.cosh x, F.(x' * sinh x))
+  let sqrt = F.sqrt >< fun x -> F.(one /. (of_int 2 * sqrt x))
+  let exp = F.exp >< F.exp
+  let log = F.log >< fun x -> F.(one /. x)
+  let sin = F.sin >< F.cos
+  let cos = F.cos >< fun x -> F.(~-) (F.sin x)
+  let asin = F.asin >< fun x -> F.(one /. (sqrt (one - (x * x))))
+  let acos = F.acos >< fun x -> F.(~- one /. (sqrt (one - (x * x))))
+  let atan = F.atan >< fun x -> F.(one /. (one + (x * x)))
+  let sinh = F.sinh >< F.cosh
+  let cosh = F.cosh >< F.sinh
 end 
-
-
-(*
-implicit module DAllNums {A : Any} {F : Floating} : sig 
-  include Num with type t := F.t d
-  include Fractional with type t := t
-  include Floating with type t := t
-end = struct*)

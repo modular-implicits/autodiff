@@ -4,12 +4,14 @@ open Imp.Data.Fractional;;
 open Imp.Data.Floating;;
 open Imp.Data;;
 open Imp.Any;;
+open Basic;;
 
 
 
-
-implicit module NumFunc {B : Floating} {A : Any} : Num 
-with type t = A.t -> B.t = struct 
+implicit module NumFunc {B : Floating} {A : Any} : sig  
+include Num with type t = A.t -> B.t
+include Fractional with type t := t 
+include Floating with type t := t end = struct 
   type t = A.t -> B.t
 
   (* Num *)
@@ -42,5 +44,7 @@ with type t = A.t -> B.t = struct
   let sinh : t -> t = fmap B.sinh
   let cosh : t -> t = fmap B.cosh
 end 
+
+
 
 
