@@ -1,5 +1,6 @@
 (library
+ (preprocess (pps ppx_deriving.show))
  (public_name adiff)
- (modules Adiff)
+ (modules Basic Funcs Vecspace)
  (libraries imp)
  (synopsis "Beautifull Differentiation"))
