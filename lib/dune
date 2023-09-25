@@ -1,5 +1,4 @@
 (library
- (preprocess (pps ppx_deriving.show))
  (public_name adiff)
  (modules Basic Funcs Vecspace)
  (libraries imp)

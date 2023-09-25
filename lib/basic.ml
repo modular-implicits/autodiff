@@ -1,7 +1,4 @@
 open Imp.Data ;;
-open Imp.Data.Num;;
-open Imp.Data.Fractional;;
-open Imp.Data.Floating;;
 open Imp.Any;;
 open Funcs;;
 
@@ -47,7 +44,7 @@ end = struct
   let ( + ) (D (x, x')) (D (y, y')) : t = D (F.(x + y),F.(x' + y'))
   let ( - ) (D (x, x')) (D (y, y')) : t = D (F.(x - y),F.(x' - y'))
   let ( * ) ((D (x, x')) : t) ((D (y, y')) : t) : t = D (F.(x * y), F.((x * y') + (x' * y)))
-  let ( / ) (D (x, x')) (D (y, y')) : t = raise (Not_Implemented "not differentiable") 
+  let ( / ) (D (_, _)) (D (_, _)) : t = raise (Not_Implemented "not differentiable") 
   let (~-) = F.(~-) >< FN.of_int (-1)
 
 

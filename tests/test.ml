@@ -1,8 +1,5 @@
 open Adiff.Basic;;
 open Imp.Data;;
-open Imp.Data.Num;;
-open Imp.Data.Fractional;;
-open Imp.Data.Floating;;
 
 
 
